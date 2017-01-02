@@ -1,0 +1,102 @@
+<html>
+<head>
+  <title>test</title>
+</head>
+<body>
+  <p>专家</p>
+  <hr>
+  <button  type="button" id="expert1">读取</button>
+  <button  type="button" id="expert2">保存</button>
+  <p>指标模板</p>
+  <hr>
+  <button  type="button" id="indicattemplate1">读取</button>
+  <button  type="button" id="indicattemplate2">保存</button>
+  <p>项目</p>
+  <hr>
+  <button  type="button" id="project1">读取</button>
+  <button  type="button" id="project2">保存</button>
+  <script type="text/javascript" src="//cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+  <script type="text/javascript">
+    $('#expert1').click(function(){
+      $.get('/api/expert')
+        .then(function(data){
+          console.log(data);
+        })
+    })
+
+    $('#expert2').click(function(){
+      $.post('/api/save/expert',{
+         name:'专家',
+         remark:'评书',
+         dept:'德邦'
+      })
+        .then(function(data){
+          console.log(data);
+        })
+    })
+
+
+    $('#indicattemplate1').click(function(){
+      $.get('/api/indicattemplate')
+        .then(function(data){
+          console.log(data);
+        })
+    })
+
+    $('#indicattemplate2').click(function(){
+      $.ajax({
+        method:'post',
+        url:'/api/save/indicattemplate',
+        contentType: "application/json; charset=utf-8",
+        data:JSON.stringify({
+             name:"模板名",
+             type:"模板类型",
+             remark:"备注",
+             indicats:[{
+                name:"指标",
+               score:"分值",
+               type:1
+             }]
+          })
+      })
+      .then(function(data){
+        console.log(data);
+      })
+    })
+
+    $('#project1').click(function(){
+      $.get('/api/project',{
+          expend:"experts"
+        })
+        .then(function(data){
+          console.log(data);
+        })
+    })
+
+    $('#project2').click(function(){
+      $.ajax({
+        method:'post',
+        url:'/api/save/project',
+        contentType: "application/json; charset=utf-8",
+        data:JSON.stringify({
+            name:"项目",
+            experts:1,
+            indicat:[{
+               name:"模板名",
+               type:"模板类型",
+               remark:"备注",
+               indicats:[{
+                  name:"指标",
+                 score:"分值",
+                 type:1
+               }]
+            }]
+          })
+      })
+      .then(function(data){
+        console.log(data);
+      })
+    })
+  </script>
+</body>
+</html>
